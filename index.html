@@ -1,0 +1,816 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Elite System Care | Enterprise Computer Hardware Services</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome for Enterprise Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts: Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        slate: {
+                            850: '#1e293b',
+                            900: '#0f172a',
+                            950: '#020617',
+                        },
+                        blue: {
+                            500: '#3b82f6',
+                            600: '#2563eb',
+                            700: '#1d4ed8',
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        mono: ['JetBrains Mono', 'monospace'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        html {
+            scroll-behavior: smooth;
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #020617;
+            color: #f8fafc;
+        }
+        .tech-grid-bg {
+            background-image: radial-gradient(rgba(59, 130, 246, 0.15) 1px, transparent 1px);
+            background-size: 32px 32px;
+        }
+        .glass-panel {
+            background: rgba(15, 23, 42, 0.75);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(59, 130, 246, 0.2);
+        }
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #020617;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #1e293b;
+            border-radius: 4px;
+            border: 1px solid rgba(59, 130, 246, 0.3);
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #3b82f6;
+        }
+    </style>
+</head>
+<body class="bg-slate-950 text-slate-100 antialiased selection:bg-blue-500 selection:text-white">
+
+    <!-- Top Notice / Geo Status Bar -->
+    <div class="bg-slate-900 border-b border-slate-800 text-xs py-2 px-4 sticky top-0 z-50 backdrop-blur-md bg-opacity-90">
+        <div class="max-w-7xl mx-auto flex flex-col sm:flex-row justify-between items-center gap-2">
+            <div class="flex items-center gap-2">
+                <span class="inline-flex h-2 w-2 rounded-full bg-emerald-500 animate-pulse"></span>
+                <span class="text-slate-300">Enterprise Hardware Operations Active</span>
+                <span class="text-slate-600">|</span>
+                <span id="geo-location-display" class="text-blue-400 font-mono font-medium">Detecting Region...</span>
+            </div>
+            <div class="flex items-center gap-4">
+                <div class="flex items-center gap-1.5 text-slate-400">
+                    <i class="fa-solid fa-headset text-blue-400"></i>
+                    <span id="geo-phone-display" class="font-mono font-semibold text-slate-200">+27 800 555 ELITE</span>
+                </div>
+                <div class="flex items-center gap-1.5">
+                    <label for="country-switcher" class="text-slate-400">Region:</label>
+                    <select id="country-switcher" onchange="switchCountry(this.value)" class="bg-slate-800 border border-slate-700 text-slate-200 rounded px-2 py-0.5 text-xs font-mono focus:outline-none focus:border-blue-500">
+                        <option value="ZA" selected>🇿🇦 South Africa (ZAR)</option>
+                        <option value="US">🇺🇸 United States (USD)</option>
+                        <option value="GB">🇬🇧 United Kingdom (GBP)</option>
+                        <option value="EU">🇪🇺 European Union (EUR)</option>
+                        <option value="AU">🇦🇺 Australia (AUD)</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Navigation Header -->
+    <header class="sticky top-[37px] z-40 bg-slate-950/80 backdrop-blur-md border-b border-slate-800/80 transition-all duration-300" id="navbar">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+            <!-- Brand Logo -->
+            <a href="#hero" onclick="scrollToSection(event, 'hero')" class="flex items-center gap-3 group">
+                <div class="h-10 w-10 rounded-lg bg-gradient-to-br from-blue-600 to-slate-800 flex items-center justify-center border border-blue-400/30 shadow-lg shadow-blue-500/10 group-hover:border-blue-400 transition-colors">
+                    <i class="fa-solid fa-microchip text-blue-400 text-xl"></i>
+                </div>
+                <div>
+                    <span class="text-xl font-bold tracking-tight text-white flex items-center gap-1.5">
+                        ELITE <span class="text-blue-500 font-mono font-normal text-sm px-1.5 py-0.5 bg-blue-500/10 rounded border border-blue-500/20">SYSTEM CARE</span>
+                    </span>
+                    <span class="block text-[10px] tracking-widest uppercase text-slate-400 font-mono">Hardware Warranty & SLAs</span>
+                </div>
+            </a>
+
+            <!-- Desktop Navigation Links -->
+            <nav class="hidden md:flex items-center gap-1">
+                <a href="#services" onclick="scrollToSection(event, 'services')" class="nav-link px-4 py-2 rounded-lg text-sm font-medium text-slate-300 hover:text-white hover:bg-slate-900 transition-all">Services & SLAs</a>
+                <a href="#pricing" onclick="scrollToSection(event, 'pricing')" class="nav-link px-4 py-2 rounded-lg text-sm font-medium text-slate-300 hover:text-white hover:bg-slate-900 transition-all">Tier Matrix</a>
+                <a href="#why-us" onclick="scrollToSection(event, 'why-us')" class="nav-link px-4 py-2 rounded-lg text-sm font-medium text-slate-300 hover:text-white hover:bg-slate-900 transition-all">Why Choose Us</a>
+                <a href="#hub" onclick="scrollToSection(event, 'hub')" class="nav-link px-4 py-2 rounded-lg text-sm font-medium text-slate-300 hover:text-white hover:bg-slate-900 transition-all">Support Hub</a>
+            </nav>
+
+            <!-- CTA Ticket Button -->
+            <div class="flex items-center gap-3">
+                <a href="#ticket-form" onclick="scrollToSection(event, 'ticket-form')" class="relative inline-flex items-center justify-center p-0.5 overflow-hidden text-sm font-medium rounded-lg group bg-gradient-to-br from-blue-500 to-blue-700 group-hover:from-blue-500 group-hover:to-blue-600 text-white shadow-lg shadow-blue-500/20 transition-all">
+                    <span class="relative px-5 py-2.5 transition-all ease-in duration-75 bg-slate-900 rounded-md group-hover:bg-opacity-0 flex items-center gap-2">
+                        <i class="fa-solid fa-ticket text-blue-400 group-hover:text-white"></i>
+                        <span>Submit Hardware Ticket</span>
+                    </span>
+                </a>
+                <!-- Mobile menu toggle -->
+                <button onclick="toggleMobileMenu()" class="md:hidden p-2.5 rounded-lg bg-slate-900 border border-slate-800 text-slate-300 hover:text-white">
+                    <i class="fa-solid fa-bars text-lg"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Mobile Menu Dropdown -->
+        <div id="mobile-menu" class="hidden md:hidden bg-slate-900 border-b border-slate-800 px-4 pt-2 pb-4 space-y-1">
+            <a href="#services" onclick="scrollToSection(event, 'services'); toggleMobileMenu();" class="block px-3 py-2 rounded-md text-base font-medium text-slate-300 hover:text-white hover:bg-slate-800">Services & SLAs</a>
+            <a href="#pricing" onclick="scrollToSection(event, 'pricing'); toggleMobileMenu();" class="block px-3 py-2 rounded-md text-base font-medium text-slate-300 hover:text-white hover:bg-slate-800">Tier Matrix</a>
+            <a href="#why-us" onclick="scrollToSection(event, 'why-us'); toggleMobileMenu();" class="block px-3 py-2 rounded-md text-base font-medium text-slate-300 hover:text-white hover:bg-slate-800">Why Choose Us</a>
+            <a href="#hub" onclick="scrollToSection(event, 'hub'); toggleMobileMenu();" class="block px-3 py-2 rounded-md text-base font-medium text-slate-300 hover:text-white hover:bg-slate-800">Support Hub</a>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section id="hero" class="relative min-h-[90vh] flex items-center justify-center tech-grid-bg pt-12 pb-20 overflow-hidden">
+        <div class="absolute inset-0 bg-gradient-to-b from-transparent via-slate-950/80 to-slate-950"></div>
+        <div class="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-blue-600/15 rounded-full blur-3xl pointer-events-none"></div>
+
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center">
+            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-500/10 border border-blue-500/20 text-blue-400 text-xs font-mono mb-6">
+                <i class="fa-solid fa-shield-halved"></i>
+                <span>Strictly Hardware Warranty & Physical Component SLAs</span>
+            </div>
+            
+            <h1 class="text-4xl sm:text-6xl lg:text-7xl font-extrabold tracking-tight text-white max-w-5xl mx-auto leading-tight">
+                Enterprise Hardware SLAs for <span class="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-blue-500 to-indigo-400">PCs & Laptops</span>
+            </h1>
+
+            <p class="mt-6 text-lg sm:text-xl text-slate-300 max-w-3xl mx-auto font-normal">
+                Zero software troubleshooting. Zero cloud insurance. Pure, uncompromised physical computer hardware maintenance, component replacement guarantees, and rigorous bench/on-site diagnostics for enterprise fleets.
+            </p>
+
+            <div class="mt-10 flex flex-col sm:flex-row justify-center items-center gap-4">
+                <a href="#ticket-form" onclick="scrollToSection(event, 'ticket-form')" class="w-full sm:w-auto px-8 py-4 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-semibold shadow-xl shadow-blue-500/25 flex items-center justify-center gap-3 transition-all transform hover:-translate-y-0.5">
+                    <i class="fa-solid fa-screwdriver-wrench"></i>
+                    <span>Log Hardware Incident</span>
+                </a>
+                <a href="#services" onclick="scrollToSection(event, 'services')" class="w-full sm:w-auto px-8 py-4 rounded-xl bg-slate-900 hover:bg-slate-800 border border-slate-700 text-slate-200 font-semibold flex items-center justify-center gap-3 transition-all">
+                    <i class="fa-solid fa-chart-bar text-blue-400"></i>
+                    <span>Explore Service SLAs</span>
+                </a>
+            </div>
+
+            <!-- Quick Highlight Badges -->
+            <div class="mt-16 grid grid-cols-2 md:grid-cols-4 gap-4 max-w-5xl mx-auto">
+                <div class="glass-panel p-4 rounded-xl text-left border border-slate-800">
+                    <div class="text-blue-400 text-xl mb-1 font-mono font-bold">4-HOUR</div>
+                    <div class="text-xs text-slate-300 font-semibold">On-Site Parts Dispatch</div>
+                    <div class="text-[11px] text-slate-500 mt-0.5">Critical enterprise tier SLA</div>
+                </div>
+                <div class="glass-panel p-4 rounded-xl text-left border border-slate-800">
+                    <div class="text-blue-400 text-xl mb-1 font-mono font-bold">100% OEM</div>
+                    <div class="text-xs text-slate-300 font-semibold">Genuine Components</div>
+                    <div class="text-[11px] text-slate-500 mt-0.5">Motherboards, GPUs, Chassis</div>
+                </div>
+                <div class="glass-panel p-4 rounded-xl text-left border border-slate-800">
+                    <div class="text-blue-400 text-xl mb-1 font-mono font-bold">PHYSICAL</div>
+                    <div class="text-xs text-slate-300 font-semibold">Hardware Exclusively</div>
+                    <div class="text-[11px] text-slate-500 mt-0.5">No OS or software scope</div>
+                </div>
+                <div class="glass-panel p-4 rounded-xl text-left border border-slate-800">
+                    <div class="text-blue-400 text-xl mb-1 font-mono font-bold" id="geo-hub-badge">ZA HUB</div>
+                    <div class="text-xs text-slate-300 font-semibold">Regional Depots</div>
+                    <div class="text-[11px] text-slate-500 mt-0.5" id="geo-location-sub">Geo-routed support</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services & Hardware SLA Focus Section -->
+    <section id="services" class="py-24 bg-slate-900/50 border-t border-slate-800/80 relative">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-3xl mx-auto mb-16">
+                <span class="text-blue-400 text-xs font-mono uppercase tracking-widest px-3 py-1 rounded bg-blue-500/10 border border-blue-500/20">Core Competencies</span>
+                <h2 class="text-3xl sm:text-4xl font-bold text-white mt-4">Enterprise Hardware Maintenance Pillars</h2>
+                <p class="text-slate-400 mt-3 text-sm sm:text-base">Elite System Care provides rigorous physical maintenance backed by strict contractual SLAs for desktop fleets and mobile workstations.</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- Pillar 1 -->
+                <div class="glass-panel p-8 rounded-2xl border border-slate-800 hover:border-blue-500/50 transition-all group">
+                    <div class="h-14 w-14 rounded-xl bg-blue-600/10 border border-blue-500/30 flex items-center justify-center text-blue-400 text-2xl mb-6 group-hover:scale-110 transition-transform">
+                        <i class="fa-solid fa-server"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-3">Business Hardware Maintenance</h3>
+                    <p class="text-slate-400 text-sm leading-relaxed mb-6">
+                        Scheduled physical cleaning, thermal paste repasting, PSU health stress testing, and structural stress inspection for high-density desktop and tower fleets.
+                    </p>
+                    <ul class="space-y-2.5 text-xs text-slate-300 font-mono">
+                        <li class="flex items-center gap-2"><i class="fa-solid fa-check text-blue-400"></i> Thermal degradation audits</li>
+                        <li class="flex items-center gap-2"><i class="fa-solid fa-check text-blue-400"></i> Power rail voltage stability checks</li>
+                        <li class="flex items-center gap-2"><i class="fa-solid fa-check text-blue-400"></i> Chassis latch & hinge reinforcement</li>
+                    </ul>
+                </div>
+
+                <!-- Pillar 2 -->
+                <div class="glass-panel p-8 rounded-2xl border border-slate-800 hover:border-blue-500/50 transition-all group">
+                    <div class="h-14 w-14 rounded-xl bg-blue-600/10 border border-blue-500/30 flex items-center justify-center text-blue-400 text-2xl mb-6 group-hover:scale-110 transition-transform">
+                        <i class="fa-solid fa-laptop-code"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-3">Component Replacement SLAs</h3>
+                    <p class="text-slate-400 text-sm leading-relaxed mb-6">
+                        Guaranteed turnaround times for broken laptop screens, damaged keyboards, faulty motherboard capacitors, failing storage controllers, and defective RAM modules.
+                    </p>
+                    <ul class="space-y-2.5 text-xs text-slate-300 font-mono">
+                        <li class="flex items-center gap-2"><i class="fa-solid fa-check text-blue-400"></i> Guaranteed 4h to 24h part swap</li>
+                        <li class="flex items-center gap-2"><i class="fa-solid fa-check text-blue-400"></i> OEM certified keyboards & displays</li>
+                        <li class="flex items-center gap-2"><i class="fa-solid fa-check text-blue-400"></i> Zero software/OS scope creep</li>
+                    </ul>
+                </div>
+
+                <!-- Pillar 3 -->
+                <div class="glass-panel p-8 rounded-2xl border border-slate-800 hover:border-blue-500/50 transition-all group">
+                    <div class="h-14 w-14 rounded-xl bg-blue-600/10 border border-blue-500/30 flex items-center justify-center text-blue-400 text-2xl mb-6 group-hover:scale-110 transition-transform">
+                        <i class="fa-solid fa-stethoscope"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-3">Preventive Diagnostics</h3>
+                    <p class="text-slate-400 text-sm leading-relaxed mb-6">
+                        Advanced oscilloscope testing, S.M.A.R.T. physical drive health analysis, thermal imaging of VRMs, and electrical short-circuit isolation before catastrophic failure occurs.
+                    </p>
+                    <ul class="space-y-2.5 text-xs text-slate-300 font-mono">
+                        <li class="flex items-center gap-2"><i class="fa-solid fa-check text-blue-400"></i> Infrared thermography on VRMs</li>
+                        <li class="flex items-center gap-2"><i class="fa-solid fa-check text-blue-400"></i> Oscilloscope ripple measurements</li>
+                        <li class="flex items-center gap-2"><i class="fa-solid fa-check text-blue-400"></i> Detailed hardware telemetry report</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Service Tier Comparison Table Section -->
+    <section id="pricing" class="py-24 bg-slate-950 border-t border-slate-800/80 relative">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-3xl mx-auto mb-16">
+                <span class="text-blue-400 text-xs font-mono uppercase tracking-widest px-3 py-1 rounded bg-blue-500/10 border border-blue-500/20">Enterprise Pricing & SLAs</span>
+                <h2 class="text-3xl sm:text-4xl font-bold text-white mt-4">Service Tier Comparison Matrix</h2>
+                <p class="text-slate-400 mt-3 text-sm sm:text-base">Select the hardware response tier aligned with your operational uptime requirements. Currency updates dynamically based on your region.</p>
+            </div>
+
+            <!-- Table Container -->
+            <div class="glass-panel rounded-2xl border border-slate-800 overflow-hidden shadow-2xl">
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left border-collapse">
+                        <thead>
+                            <tr class="border-b border-slate-800 bg-slate-900/80">
+                                <th class="p-6 text-sm font-semibold text-slate-300 uppercase tracking-wider w-1/4">Feature / SLA Spec</th>
+                                <th class="p-6 text-sm font-semibold text-white uppercase tracking-wider w-1/4">
+                                    Standard Care
+                                    <span class="block text-xs text-blue-400 font-mono font-normal mt-1 tier-price" data-base-zar="950">ZAR 950 /mo per unit</span>
+                                </th>
+                                <th class="p-6 text-sm font-semibold text-white uppercase tracking-wider w-1/4 bg-blue-600/10 border-x border-blue-500/20">
+                                    Enterprise Fleet
+                                    <span class="block text-xs text-blue-400 font-mono font-normal mt-1 tier-price" data-base-zar="2,450">ZAR 2,450 /mo per unit</span>
+                                </th>
+                                <th class="p-6 text-sm font-semibold text-white uppercase tracking-wider w-1/4">
+                                    Mission-Critical
+                                    <span class="block text-xs text-blue-400 font-mono font-normal mt-1 tier-price" data-base-zar="5,400">ZAR 5,400 /mo per unit</span>
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-slate-800/60 text-sm text-slate-300">
+                            <tr>
+                                <td class="p-6 font-medium text-white flex items-center gap-2"><i class="fa-solid fa-clock text-blue-400"></i> On-Site Dispatch SLA</td>
+                                <td class="p-6 font-mono text-xs">Next Business Day (NBD)</td>
+                                <td class="p-6 font-mono text-xs bg-blue-600/5 border-x border-blue-500/10 font-semibold text-blue-300">8-Hour Rapid Dispatch</td>
+                                <td class="p-6 font-mono text-xs text-emerald-400 font-bold">4-Hour Priority Dispatch</td>
+                            </tr>
+                            <tr>
+                                <td class="p-6 font-medium text-white flex items-center gap-2"><i class="fa-solid fa-microchip text-blue-400"></i> Component Replacement</td>
+                                <td class="p-6 font-mono text-xs">Standard OEM Parts</td>
+                                <td class="p-6 font-mono text-xs bg-blue-600/5 border-x border-blue-500/10">Priority OEM Stock Allocation</td>
+                                <td class="p-6 font-mono text-xs text-emerald-400">Dedicated On-Site Spare Locker</td>
+                            </tr>
+                            <tr>
+                                <td class="p-6 font-medium text-white flex items-center gap-2"><i class="fa-solid fa-laptop text-blue-400"></i> Covered Hardware</td>
+                                <td class="p-6 font-mono text-xs">Desktops & Standard Laptops</td>
+                                <td class="p-6 font-mono text-xs bg-blue-600/5 border-x border-blue-500/10">High-End Workstations & Laptops</td>
+                                <td class="p-6 font-mono text-xs">All Enterprise PCs, Servers & Laptops</td>
+                            </tr>
+                            <tr>
+                                <td class="p-6 font-medium text-white flex items-center gap-2"><i class="fa-solid fa-screwdriver text-blue-400"></i> Preventive Maintenance</td>
+                                <td class="p-6 font-mono text-xs">Semi-Annual Cleaning</td>
+                                <td class="p-6 font-mono text-xs bg-blue-600/5 border-x border-blue-500/10">Quarterly Thermal & Voltage Audit</td>
+                                <td class="p-6 font-mono text-xs">Monthly Full Diagnostic Telemetry</td>
+                            </tr>
+                            <tr>
+                                <td class="p-6 font-medium text-white flex items-center gap-2"><i class="fa-solid fa-ban text-blue-400"></i> Software / Cloud Support</td>
+                                <td class="p-6 text-slate-500 font-mono text-xs">Excluded (Hardware Only)</td>
+                                <td class="p-6 text-slate-500 font-mono text-xs bg-blue-600/5 border-x border-blue-500/10">Excluded (Hardware Only)</td>
+                                <td class="p-6 text-slate-500 font-mono text-xs">Excluded (Hardware Only)</td>
+                            </tr>
+                            <tr>
+                                <td class="p-6 font-medium text-white">Action</td>
+                                <td class="p-6">
+                                    <button onclick="selectTier('Standard Care')" class="px-4 py-2 bg-slate-800 hover:bg-slate-700 text-white rounded-lg text-xs font-semibold w-full transition-colors">Select Standard</button>
+                                </td>
+                                <td class="p-6 bg-blue-600/5 border-x border-blue-500/10">
+                                    <button onclick="selectTier('Enterprise Fleet')" class="px-4 py-2 bg-blue-600 hover:bg-blue-500 text-white rounded-lg text-xs font-semibold w-full transition-colors shadow-lg shadow-blue-500/20">Select Enterprise</button>
+                                </td>
+                                <td class="p-6">
+                                    <button onclick="selectTier('Mission-Critical')" class="px-4 py-2 bg-slate-800 hover:bg-slate-700 text-white rounded-lg text-xs font-semibold w-full transition-colors">Select Critical</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Why Choose Us Section -->
+    <section id="why-us" class="py-24 bg-slate-900/40 border-t border-slate-800/80 relative">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                <div>
+                    <span class="text-blue-400 text-xs font-mono uppercase tracking-widest px-3 py-1 rounded bg-blue-500/10 border border-blue-500/20">Enterprise Reliability</span>
+                    <h2 class="text-3xl sm:text-4xl font-bold text-white mt-4">Why Global Enterprises Trust Elite System Care</h2>
+                    <p class="text-slate-300 mt-4 text-sm sm:text-base leading-relaxed">
+                        When physical hardware fails, business continuity hangs in the balance. We eliminate guesswork with certified technician teams, authentic OEM spare part stockpiles across regional hubs, and uncompromising adherence to strict hardware SLAs.
+                    </p>
+
+                    <div class="mt-8 space-y-4">
+                        <div class="flex items-start gap-4">
+                            <div class="h-10 w-10 rounded-lg bg-blue-600/10 border border-blue-500/30 flex items-center justify-center text-blue-400 flex-shrink-0 mt-1">
+                                <i class="fa-solid fa-certificate"></i>
+                            </div>
+                            <div>
+                                <h4 class="text-white font-semibold text-base">Certified Component Inventory</h4>
+                                <p class="text-slate-400 text-xs mt-1">Direct OEM sourcing for motherboards, power delivery modules, display assemblies, and cooling sub-systems.</p>
+                            </div>
+                        </div>
+
+                        <div class="flex items-start gap-4">
+                            <div class="h-10 w-10 rounded-lg bg-blue-600/10 border border-blue-500/30 flex items-center justify-center text-blue-400 flex-shrink-0 mt-1">
+                                <i class="fa-solid fa-bolt"></i>
+                            </div>
+                            <div>
+                                <h4 class="text-white font-semibold text-base">Rapid On-Site & Bench Turnarounds</h4>
+                                <p class="text-slate-400 text-xs mt-1">Streamlined RMA processing and on-site toolkits ensure minimum downtime for mission-critical workstations.</p>
+                            </div>
+                        </div>
+
+                        <div class="flex items-start gap-4">
+                            <div class="h-10 w-10 rounded-lg bg-blue-600/10 border border-blue-500/30 flex items-center justify-center text-blue-400 flex-shrink-0 mt-1">
+                                <i class="fa-solid fa-ban"></i>
+                            </div>
+                            <div>
+                                <h4 class="text-white font-semibold text-base">Strictly No Software Scope Creep</h4>
+                                <p class="text-slate-400 text-xs mt-1">We never touch operating systems, user data, or applications. Pure physical hardware troubleshooting only.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Stats Grid -->
+                <div class="grid grid-cols-2 gap-6">
+                    <div class="glass-panel p-8 rounded-2xl border border-slate-800 text-center">
+                        <div class="text-4xl sm:text-5xl font-extrabold text-blue-400 font-mono mb-2">99.8%</div>
+                        <div class="text-sm font-semibold text-white">SLA Compliance Rate</div>
+                        <div class="text-xs text-slate-500 mt-1">Across global service hubs</div>
+                    </div>
+                    <div class="glass-panel p-8 rounded-2xl border border-slate-800 text-center">
+                        <div class="text-4xl sm:text-5xl font-extrabold text-blue-400 font-mono mb-2">4.2h</div>
+                        <div class="text-sm font-semibold text-white">Avg On-Site Response</div>
+                        <div class="text-xs text-slate-500 mt-1">For mission-critical tiers</div>
+                    </div>
+                    <div class="glass-panel p-8 rounded-2xl border border-slate-800 text-center">
+                        <div class="text-4xl sm:text-5xl font-extrabold text-blue-400 font-mono mb-2">50k+</div>
+                        <div class="text-sm font-semibold text-white">Units Maintained</div>
+                        <div class="text-xs text-slate-500 mt-1">Laptops & enterprise desktops</div>
+                    </div>
+                    <div class="glass-panel p-8 rounded-2xl border border-slate-800 text-center">
+                        <div class="text-4xl sm:text-5xl font-extrabold text-blue-400 font-mono mb-2">100%</div>
+                        <div class="text-sm font-semibold text-white">Hardware Dedicated</div>
+                        <div class="text-xs text-slate-500 mt-1">Zero software distractions</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Interactive Submit a Hardware Ticket Form Section -->
+    <section id="ticket-form" class="py-24 bg-slate-950 border-t border-slate-800/80 relative">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-2xl mx-auto mb-16">
+                <span class="text-blue-400 text-xs font-mono uppercase tracking-widest px-3 py-1 rounded bg-blue-500/10 border border-blue-500/20">Rapid RMA Dispatch</span>
+                <h2 class="text-3xl sm:text-4xl font-bold text-white mt-4">Submit a Hardware Ticket</h2>
+                <p class="text-slate-400 mt-3 text-sm sm:text-base">Initiate a physical component warranty claim or maintenance request. Our engineers respond instantly.</p>
+            </div>
+
+            <!-- Form Container -->
+            <div class="glass-panel p-8 sm:p-10 rounded-3xl border border-slate-800 shadow-2xl relative">
+                <form id="hardware-ticket-form" onsubmit="handleTicketSubmit(event)" class="space-y-6">
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                        <!-- Full Name -->
+                        <div>
+                            <label class="block text-xs font-mono uppercase text-slate-300 mb-2">Enterprise Contact Name *</label>
+                            <input type="text" id="ticket-name" required placeholder="e.g. Carllo Swanepoel" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-3 text-sm text-white placeholder-slate-500 focus:outline-none focus:border-blue-500 font-mono">
+                        </div>
+                        <!-- Company Email -->
+                        <div>
+                            <label class="block text-xs font-mono uppercase text-slate-300 mb-2">Corporate Email *</label>
+                            <input type="email" id="ticket-email" required placeholder="carllo@elitesystemcare.co.za" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-3 text-sm text-white placeholder-slate-500 focus:outline-none focus:border-blue-500 font-mono">
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                        <!-- Device Selector -->
+                        <div>
+                            <label class="block text-xs font-mono uppercase text-slate-300 mb-2">Device Classification *</label>
+                            <select id="ticket-device" required class="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:border-blue-500 font-mono">
+                                <option value="" disabled selected>Select hardware type...</option>
+                                <option value="Laptop">Enterprise Laptop (Dell / Lenovo / HP)</option>
+                                <option value="Desktop">Desktop Tower / Workstation</option>
+                                <option value="Server">Rackmount Server Chassis</option>
+                                <option value="Display">External High-Res Display / Dock</option>
+                            </select>
+                        </div>
+                        <!-- Serial Number -->
+                        <div>
+                            <label class="block text-xs font-mono uppercase text-slate-300 mb-2">Hardware Serial Number / Service Tag *</label>
+                            <input type="text" id="ticket-serial" required placeholder="e.g. 5CG9432XYZ" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-3 text-sm text-white placeholder-slate-500 focus:outline-none focus:border-blue-500 font-mono">
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                        <!-- Hardware Issue Category -->
+                        <div>
+                            <label class="block text-xs font-mono uppercase text-slate-300 mb-2">Physical Hardware Issue *</label>
+                            <select id="ticket-issue" required class="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:border-blue-500 font-mono">
+                                <option value="" disabled selected>Select hardware fault...</option>
+                                <option value="Power Failure">Power Supply Unit (PSU) / Charging Failure</option>
+                                <option value="Screen Damage">Cracked / Dead Display Panel</option>
+                                <option value="Thermal Malfunction">Excessive Thermal Throttling / Fan Failure</option>
+                                <option value="Storage Controller">Physical NVMe / SSD Controller Failure</option>
+                                <option value="Motherboard / RAM">Motherboard Capacitor Fault or RAM Error</option>
+                                <option value="Other Hardware">Other Physical Component Damage</option>
+                            </select>
+                        </div>
+                        <!-- Service Tier -->
+                        <div>
+                            <label class="block text-xs font-mono uppercase text-slate-300 mb-2">Contract SLA Tier</label>
+                            <select id="ticket-tier" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:border-blue-500 font-mono">
+                                <option value="Standard Care">Standard Care (NBD)</option>
+                                <option value="Enterprise Fleet" selected>Enterprise Fleet (8-Hour)</option>
+                                <option value="Mission-Critical">Mission-Critical (4-Hour)</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- Detailed Description -->
+                    <div>
+                        <label class="block text-xs font-mono uppercase text-slate-300 mb-2">Physical Symptom Details *</label>
+                        <textarea id="ticket-details" rows="4" required placeholder="Describe physical symptoms (e.g., smell of ozone, loud mechanical fan grinding, POST error beep code 5-2)..." class="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-3 text-sm text-white placeholder-slate-500 focus:outline-none focus:border-blue-500 font-mono"></textarea>
+                    </div>
+
+                    <!-- Submit Button -->
+                    <button type="submit" class="w-full py-4 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-semibold shadow-xl shadow-blue-500/25 flex items-center justify-center gap-2 transition-all transform hover:-translate-y-0.5">
+                        <i class="fa-solid fa-paper-plane"></i>
+                        <span>Transmit Hardware Ticket to Dispatch Hub</span>
+                    </button>
+                </form>
+
+                <!-- Success Confirmation State (Hidden by default) -->
+                <div id="ticket-success" class="hidden text-center py-12 space-y-6">
+                    <div class="h-20 w-20 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 text-3xl flex items-center justify-center mx-auto">
+                        <i class="fa-solid fa-check"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold text-white">Hardware Ticket Logged Successfully</h3>
+                    <p class="text-slate-300 text-sm max-w-md mx-auto">
+                        Your RMA incident has been routed to your regional support hub. Tracking ID: <span id="confirmed-ticket-id" class="font-mono font-bold text-blue-400">ESC-98421</span>. An on-site technician has been notified.
+                    </p>
+                    <button onclick="resetTicketForm()" class="px-6 py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-white text-xs font-mono font-semibold transition-colors">
+                        Submit Another Ticket
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Support Hub & Geo Info Section -->
+    <section id="hub" class="py-24 bg-slate-900/50 border-t border-slate-800/80 relative">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-3xl mx-auto mb-16">
+                <span class="text-blue-400 text-xs font-mono uppercase tracking-widest px-3 py-1 rounded bg-blue-500/10 border border-blue-500/20">Global Presence</span>
+                <h2 class="text-3xl sm:text-4xl font-bold text-white mt-4">Regional Support Hub & Logistics</h2>
+                <p class="text-slate-400 mt-3 text-sm sm:text-base">We maintain regional hardware spare parts depots to ensure rapid on-site dispatch without customs or cross-border delays.</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <!-- Hub Info Card -->
+                <div class="glass-panel p-8 rounded-2xl border border-slate-800 space-y-6">
+                    <div class="flex items-center gap-4">
+                        <div class="h-12 w-12 rounded-xl bg-blue-600/10 border border-blue-500/30 flex items-center justify-center text-blue-400 text-xl font-mono">
+                            <i class="fa-solid fa-warehouse"></i>
+                        </div>
+                        <div>
+                            <h3 id="hub-name-display" class="text-xl font-bold text-white">Centurion Logistics Depot</h3>
+                            <span class="text-xs font-mono text-blue-400">Primary Spare Parts Depot</span>
+                        </div>
+                    </div>
+
+                    <div class="space-y-3 text-sm text-slate-300 font-mono">
+                        <div class="flex items-center justify-between py-2 border-b border-slate-800/60">
+                            <span class="text-slate-400">Physical Address:</span>
+                            <span id="hub-address" class="text-right text-white">Rooihuiskraal, Centurion, Gauteng</span>
+                        </div>
+                        <div class="flex items-center justify-between py-2 border-b border-slate-800/60">
+                            <span class="text-slate-400">Direct Support Line:</span>
+                            <span id="hub-phone" class="text-right text-blue-400">+27 800 555 ELITE</span>
+                        </div>
+                        <div class="flex items-center justify-between py-2 border-b border-slate-800/60">
+                            <span class="text-slate-400">Local Currency:</span>
+                            <span id="hub-currency" class="text-right text-white">ZAR (R)</span>
+                        </div>
+                        <div class="flex items-center justify-between py-2">
+                            <span class="text-slate-400">Dispatch SLA Guarantee:</span>
+                            <span id="hub-sla" class="text-right text-emerald-400">4 Hours On-Site</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Geo Status Visualizer -->
+                <div class="glass-panel p-8 rounded-2xl border border-slate-800 flex flex-col justify-between space-y-6">
+                    <div>
+                        <h3 class="text-lg font-bold text-white mb-2">Automated Geo-Localization Engine</h3>
+                        <p class="text-slate-400 text-xs leading-relaxed">
+                            Elite System Care automatically routes your hardware ticket to the nearest regional depot based on your IP timezone and browser locale. You can also manually switch regions using the header selector to test cross-border SLAs.
+                        </p>
+                    </div>
+
+                    <div class="p-4 rounded-xl bg-slate-900 border border-slate-800 space-y-3">
+                        <div class="flex items-center justify-between text-xs font-mono">
+                            <span class="text-slate-400">Client IP Country:</span>
+                            <span id="geo-detected-country" class="text-blue-400 font-bold">South Africa (ZA)</span>
+                        </div>
+                        <div class="flex items-center justify-between text-xs font-mono">
+                            <span class="text-slate-400">Currency Mode:</span>
+                            <span id="geo-currency-mode" class="text-white font-bold">ZAR (R)</span>
+                        </div>
+                        <div class="flex items-center justify-between text-xs font-mono">
+                            <span class="text-slate-400">Nearest Hub Status:</span>
+                            <span class="text-emerald-400 font-bold flex items-center gap-1.5">
+                                <span class="h-2 w-2 rounded-full bg-emerald-500 animate-pulse"></span> Operational
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="text-[11px] text-slate-500 italic">
+                        * Note: All services are strictly restricted to physical computer hardware, components, maintenance, and warranty SLAs. Software troubleshooting is excluded.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-slate-950 border-t border-slate-800 py-12 text-slate-400 text-xs font-mono">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row justify-between items-center gap-6">
+            <div class="flex items-center gap-3">
+                <div class="h-8 w-8 rounded-lg bg-blue-600 flex items-center justify-center text-white font-bold">
+                    <i class="fa-solid fa-microchip"></i>
+                </div>
+                <span class="text-white font-bold tracking-wider">ELITE SYSTEM CARE</span>
+            </div>
+            <div class="text-center md:text-left text-slate-500">
+                &copy; 2026 Elite System Care Ltd. All rights reserved. Professional Computer Hardware Services & SLAs.
+            </div>
+            <div class="flex items-center gap-6 text-slate-400">
+                <a href="#services" onclick="scrollToSection(event, 'services')" class="hover:text-blue-400 transition-colors">Services</a>
+                <a href="#pricing" onclick="scrollToSection(event, 'pricing')" class="hover:text-blue-400 transition-colors">Tiers</a>
+                <a href="#ticket-form" onclick="scrollToSection(event, 'ticket-form')" class="hover:text-blue-400 transition-colors">RMA Ticket</a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript Application Logic -->
+    <script>
+        // Geo-Regional Data Matrix (Defaulting to South Africa ZA as requested)
+        const regionalData = {
+            ZA: {
+                countryName: "South Africa",
+                code: "ZA",
+                currencySymbol: "ZAR (R)",
+                currencyCode: "ZAR",
+                phone: "+27 800 555 ELITE",
+                hubName: "Centurion Logistics Depot",
+                address: "Rooihuiskraal, Centurion, Gauteng",
+                slaText: "4 Hours On-Site",
+                multiplier: 1.0
+            },
+            US: {
+                countryName: "United States",
+                code: "US",
+                currencySymbol: "USD ($)",
+                currencyCode: "USD",
+                phone: "+1 (800) 555-ELITE",
+                hubName: "North American Command Hub",
+                address: "100 Enterprise Parkway, Austin, TX",
+                slaText: "4 Hours On-Site",
+                multiplier: 0.054
+            },
+            GB: {
+                countryName: "United Kingdom",
+                code: "GB",
+                currencySymbol: "GBP (£)",
+                currencyCode: "GBP",
+                phone: "+44 800 555 3548",
+                hubName: "London Tech Depot",
+                address: "42 Silicon Roundabout, London, EC1V",
+                slaText: "4 Hours On-Site",
+                multiplier: 0.042
+            },
+            EU: {
+                countryName: "European Union",
+                code: "EU",
+                currencySymbol: "EUR (€)",
+                currencyCode: "EUR",
+                phone: "+31 800 555 3548",
+                hubName: "Frankfurt Central Depot",
+                address: "Mainzer Landstraße 180, Frankfurt am Main",
+                slaText: "4 Hours On-Site",
+                multiplier: 0.050
+            },
+            AU: {
+                countryName: "Australia",
+                code: "AU",
+                currencySymbol: "AUD ($)",
+                currencyCode: "AUD",
+                phone: "+61 1800 555 354",
+                hubName: "Sydney Hardware Depot",
+                address: "88 Market Street, Sydney, NSW 2000",
+                slaText: "4 Hours On-Site",
+                multiplier: 0.082
+            }
+        };
+
+        // Detect user country based on timezone or default to ZA
+        function detectUserRegion() {
+            try {
+                const tz = Intl.DateTimeFormat().resolvedOptions().timeZone || "";
+                let detected = "ZA";
+                if (tz.includes("London") || tz.includes("Belfast")) detected = "GB";
+                else if (tz.includes("Europe/") || tz.includes("Berlin") || tz.includes("Paris") || tz.includes("Amsterdam")) detected = "EU";
+                else if (tz.includes("America/") || tz.includes("New_York") || tz.includes("Chicago")) detected = "US";
+                else if (tz.includes("Sydney") || tz.includes("Melbourne") || tz.includes("Australia/")) detected = "AU";
+                
+                document.getElementById('country-switcher').value = detected;
+                applyRegionData(detected);
+            } catch (e) {
+                applyRegionData("ZA");
+            }
+        }
+
+        // Switch region manually or via auto-detection
+        function switchCountry(countryCode) {
+            applyRegionData(countryCode);
+        }
+
+        // Apply region values to UI elements and prices
+        function applyRegionData(code) {
+            const data = regionalData[code] || regionalData["ZA"];
+            
+            // Header displays
+            document.getElementById('geo-location-display').innerText = `${data.countryName} (${data.currencyCode})`;
+            document.getElementById('geo-phone-display').innerText = data.phone;
+            document.getElementById('geo-hub-badge').innerText = `${data.code} HUB`;
+            document.getElementById('geo-location-sub').innerText = data.hubName;
+
+            // Hub section displays
+            document.getElementById('hub-name-display').innerText = data.hubName;
+            document.getElementById('hub-address').innerText = data.address;
+            document.getElementById('hub-phone').innerText = data.phone;
+            document.getElementById('hub-currency').innerText = data.currencySymbol;
+            document.getElementById('hub-sla').innerText = data.slaText;
+
+            // Geo status box
+            document.getElementById('geo-detected-country').innerText = `${data.countryName} (${data.code})`;
+            document.getElementById('geo-currency-mode').innerText = data.currencySymbol;
+
+            // Update Tier Prices in Pricing Table
+            const priceElements = document.querySelectorAll('.tier-price');
+            priceElements.forEach(el => {
+                const baseZar = parseFloat(el.getAttribute('data-base-zar').replace(/,/g, ''));
+                const converted = Math.round(baseZar * data.multiplier);
+                el.innerText = `${data.currencyCode} ${converted.toLocaleString()} /mo per unit`;
+            });
+        }
+
+        // Precise Smooth Scrolling with Perfect Centering or Header Offset
+        function scrollToSection(event, targetId) {
+            event.preventDefault();
+            const targetElement = document.getElementById(targetId);
+            if (!targetElement) return;
+
+            const elementRect = targetElement.getBoundingClientRect();
+            const absoluteElementTop = elementRect.top + window.pageYOffset;
+            const windowHeight = window.innerHeight;
+            const elementHeight = targetElement.offsetHeight;
+
+            // Calculate scroll position to place the section nicely centered or cleanly aligned
+            let targetPosition;
+            if (elementHeight < windowHeight) {
+                // Center the section in the viewport
+                targetPosition = absoluteElementTop - (windowHeight / 2) + (elementHeight / 2);
+            } else {
+                // Align to top with offset for sticky headers
+                targetPosition = absoluteElementTop - 80;
+            }
+
+            window.scrollTo({
+                top: targetPosition,
+                behavior: 'smooth'
+            });
+        }
+
+        // Mobile Menu Toggle
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobile-menu');
+            menu.classList.toggle('hidden');
+        }
+
+        // Ticket Form Submission Handler
+        function handleTicketSubmit(event) {
+            event.preventDefault();
+            
+            const name = document.getElementById('ticket-name').value;
+            const email = document.getElementById('ticket-email').value;
+            const device = document.getElementById('ticket-device').value;
+            const serial = document.getElementById('ticket-serial').value;
+            const issue = document.getElementById('ticket-issue').value;
+
+            if (!name || !email || !device || !serial || !issue) {
+                return;
+            }
+
+            // Generate random confirmation ID
+            const randomId = 'ESC-' + Math.floor(10000 + Math.random() * 90000);
+            document.getElementById('confirmed-ticket-id').innerText = randomId;
+
+            // Hide form, show success state
+            document.getElementById('hardware-ticket-form').classList.add('hidden');
+            document.getElementById('ticket-success').classList.remove('hidden');
+        }
+
+        // Reset Ticket Form
+        function resetTicketForm() {
+            document.getElementById('hardware-ticket-form').reset();
+            document.getElementById('ticket-success').classList.add('hidden');
+            document.getElementById('hardware-ticket-form').classList.remove('hidden');
+        }
+
+        // Pre-select tier from pricing table into ticket form
+        function selectTier(tierName) {
+            const tierSelect = document.getElementById('ticket-tier');
+            for (let i = 0; i < tierSelect.options.length; i++) {
+                if (tierSelect.options[i].value === tierName) {
+                    tierSelect.selectedIndex = i;
+                    break;
+                }
+            }
+            // Smooth scroll to ticket form and center
+            const ticketSection = document.getElementById('ticket-form');
+            const rect = ticketSection.getBoundingClientRect();
+            const top = rect.top + window.pageYOffset - (window.innerHeight / 2) + (ticketSection.offsetHeight / 2);
+            window.scrollTo({
+                top: top,
+                behavior: 'smooth'
+            });
+        }
+
+        // Initialize on load
+        window.onload = function() {
+            detectUserRegion();
+        };
+    </script>
+</body>
+</html>
